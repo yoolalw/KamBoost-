@@ -29,6 +29,13 @@ public class UserModel implements UserDetails {
     private String senhaUser;
     private UserRole role;
 
+    public UserModel(String nomeUser, String senhaUser, String emailUser, UserRole role){
+        this.nomeUser = nomeUser;
+        this.emailUser = emailUser;
+        this.senhaUser = senhaUser;
+        this.role = role;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         if (this.role == UserRole.ADMIN)

@@ -20,10 +20,6 @@ public class UserController {
         return ResponseEntity.ok(userService.listarUser());
     }
 
-    @PostMapping("/novoUser")
-    public ResponseEntity<List<UserModel>> novoUser(@RequestBody UserModel userModel){
-        return ResponseEntity.ok(userService.novoUser(userModel));
-    }
 
     @PutMapping("/attUser/{id}")
     public ResponseEntity<UserModel> userAtualizado(@PathVariable Integer id, @RequestBody UserModel userModel){
