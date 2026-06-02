@@ -1,9 +1,6 @@
 package com.lalw.kamboost.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,7 +28,7 @@ public class UserModel implements UserDetails {
     private String emailUser;
     private String senhaUser;
     private UserRole role;
-    
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         if (this.role == UserRole.ADMIN)
@@ -41,7 +38,7 @@ public class UserModel implements UserDetails {
 
     @Override
     public @Nullable String getPassword() {
-        return "";
+        return senhaUser;
     }
 
     @Override
