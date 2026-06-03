@@ -1,10 +1,12 @@
 package com.lalw.kamboost.controllers;
 
 import com.lalw.kamboost.dto.AuthenticationDto;
+import com.lalw.kamboost.dto.LoginResponseDto;
 import com.lalw.kamboost.dto.RegisterDto;
 import com.lalw.kamboost.models.UserModel;
 import com.lalw.kamboost.models.UserRole;
 import com.lalw.kamboost.repositorys.UserRepository;
+import com.lalw.kamboost.secutiry.TokenService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -27,12 +29,17 @@ public class AuthenticationController {
     @Autowired
     private UserRepository repository;
 
+    @Autowired
+    private TokenService tokenService;
+
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody @Valid AuthenticationDto data){
         var usernamePassword = new UsernamePasswordAuthenticationToken(data.emailUser(), data.senhaUser());
         var auth = this.authenticationManager.authenticate(usernamePassword);
 
-        return ResponseEntity.ok().build();
+        var token = tokenService.generateToken((UserModel) auth.getPrincipal());
+
+        return ResponseEntity.ok(new LoginResponseDto(token));
     }
     @PostMapping("/novoUser")
     public ResponseEntity<List<UserModel>> novoUser(@RequestBody @Valid RegisterDto data){
