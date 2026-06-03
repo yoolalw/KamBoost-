@@ -27,6 +27,8 @@ public class UserModel implements UserDetails {
     private String nomeUser;
     private String emailUser;
     private String senhaUser;
+
+    @Enumerated(EnumType.STRING)
     private UserRole role;
 
     public UserModel(String nomeUser, String emailUser, String senhaUser, UserRole role){
