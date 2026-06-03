@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("auth")
+@RequestMapping("/auth")
 public class AuthenticationController {
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -28,7 +28,7 @@ public class AuthenticationController {
     private UserRepository repository;
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody @Valid AuthenticationDto data){
+    public ResponseEntity<?> login(@RequestBody @Valid AuthenticationDto data){
         var usernamePassword = new UsernamePasswordAuthenticationToken(data.emailUser(), data.senhaUser());
         var auth = this.authenticationManager.authenticate(usernamePassword);
 
@@ -39,6 +39,7 @@ public class AuthenticationController {
         if(this.repository.findByEmailUser(data.emailUser()) != null) return ResponseEntity.badRequest().build();
         String encryptPass = new BCryptPasswordEncoder().encode(data.senhaUser());
         UserModel user = new UserModel(data.nomeUser(), data.emailUser(), encryptPass, data.role());
+        this.repository.save(user);
         return ResponseEntity.ok().build();
     }
 

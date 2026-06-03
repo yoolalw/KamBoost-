@@ -29,7 +29,7 @@ public class UserModel implements UserDetails {
     private String senhaUser;
     private UserRole role;
 
-    public UserModel(String nomeUser, String senhaUser, String emailUser, UserRole role){
+    public UserModel(String nomeUser, String emailUser, String senhaUser, UserRole role){
         this.nomeUser = nomeUser;
         this.emailUser = emailUser;
         this.senhaUser = senhaUser;
